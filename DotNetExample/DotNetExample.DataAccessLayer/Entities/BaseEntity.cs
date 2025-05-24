@@ -1,4 +1,4 @@
-﻿namespace DotNetExample.DataAccessLayer
+﻿namespace DotNetExample.DataAccessLayer.Entities
 {
     public abstract class BaseEntity<T>
     {

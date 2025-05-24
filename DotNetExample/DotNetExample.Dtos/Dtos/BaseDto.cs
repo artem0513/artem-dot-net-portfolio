@@ -1,4 +1,4 @@
-﻿namespace DotNetExample.Dtos
+﻿namespace DotNetExample.Dtos.Dtos
 {
     public abstract class BaseDto<T>
     {
