@@ -2,6 +2,7 @@
 using DotNetExample.Dtos.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DotNetExample.Controllers
 {
@@ -23,13 +24,24 @@ namespace DotNetExample.Controllers
             return Ok();
         }
 
-        [HttpGet("{orderId}")]
+        [HttpPut("user/update")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderDto updateOrderDto, CancellationToken cancellationToken)
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            await _orderService.Update(userId, updateOrderDto, cancellationToken);
+
+            return Ok();
+        }
+
+        [HttpGet("admin/get/{orderId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get([FromRoute] int orderId, CancellationToken cancellationToken)
         {
             return Ok(await _orderService.GetAsync(orderId, cancellationToken));
         }
 
-        [HttpDelete("{orderId}")]
+        [HttpDelete("admin/create/{orderId}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateOrder([FromRoute] int orderId, CancellationToken cancellationToken)
         {

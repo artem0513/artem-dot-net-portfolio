@@ -10,9 +10,19 @@ namespace DotNetExample.Business.Services
         {
         }
 
-        public async Task AddItemToOrderAsync(int userId, AddOrderItemDto item, CancellationToken cancellationToken = default)
+        public async Task AddItemToOrderAsync(int userId, UpsertOrderItemDto item, CancellationToken cancellationToken = default)
         {
             await Repository.AddItemToOrderAsync(userId, item, cancellationToken);
+        }
+
+        public async Task<ICollection<OrderItemDto>> GetByOrderId(int orderId, int userId, CancellationToken cancellationToken = default)
+        {
+            return await Repository.GetByOrderId(orderId, userId, cancellationToken);
+        }
+
+        public async Task<ICollection<OrderItemDto>> GetByOrderId(int orderId, CancellationToken cancellationToken = default)
+        {
+            return await Repository.GetByOrderId(orderId, cancellationToken);
         }
     }
 }

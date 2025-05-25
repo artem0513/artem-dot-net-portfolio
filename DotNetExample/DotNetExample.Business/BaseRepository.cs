@@ -18,13 +18,13 @@ namespace DotNetExample.Business
         protected TDbContext DbContext { get; set; }
 
 
-        public virtual async Task<TDto> GetAsync(TId id, bool saveChangesAsync = true, CancellationToken cancellationToken = default)
+        public virtual async Task<TDto> GetAsync(TId id, CancellationToken cancellationToken = default)
         {
             var entity = await DbContext.Set<TEntity>().FindAsync([id], cancellationToken);
             return Mapper.Map<TDto>(entity);
         }
 
-        public virtual async Task<ICollection<TDto>> GetAsync(IEnumerable<TId> ids, bool saveChangesAsync = true, CancellationToken cancellationToken = default)
+        public virtual async Task<ICollection<TDto>> GetAsync(IEnumerable<TId> ids, CancellationToken cancellationToken = default)
         {
             var entities = await DbContext.Set<TEntity>().Where(e => ids.Contains(e.Id)).ToListAsync(cancellationToken);
             return Mapper.Map<ICollection<TDto>>(entities);

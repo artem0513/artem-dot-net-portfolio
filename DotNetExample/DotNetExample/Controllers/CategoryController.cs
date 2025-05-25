@@ -15,19 +15,19 @@ namespace DotNetExample.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet("{categoryId}")]
+        [HttpGet("get/{categoryId}")]
         public async Task<IActionResult> Get([FromRoute] int categoryId, CancellationToken cancellationToken)
         {
             return Ok(await _categoryService.GetAsync(categoryId, cancellationToken));
         }
 
-        [HttpGet]
+        [HttpGet("get")]
         public async Task<IActionResult> GetAll([FromQuery] int categoryIds, CancellationToken cancellationToken)
         {
             return Ok(await _categoryService.GetAsync(categoryIds, cancellationToken));
         }
 
-        [HttpDelete("{categoryId}")]
+        [HttpDelete("admin/delete/{categoryId}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int categoryId, CancellationToken cancellationToken)
         {

@@ -17,18 +17,25 @@ namespace DotNetExample.Controllers
             _orderItemService = orderItemService;
         }
 
-
-        [HttpPost("admin/add-item")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddOrderItem([FromBody] OrderItemDto orderItem, CancellationToken cancellationToken)
+        [HttpPost("user/get-items/{orderId}")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> GetUserOrderItems([FromRoute] int orderId, CancellationToken cancellationToken)
         {
-            await _orderItemService.AddAsync(orderItem, cancellationToken);
-            return Ok();
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            return Ok(await _orderItemService.GetByOrderId(orderId, userId, cancellationToken));
+        }
+
+        [HttpPost("admin/get-items/{orderId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetOrderItems([FromRoute] int orderId, CancellationToken cancellationToken)
+        {
+            return Ok(await _orderItemService.GetByOrderId(orderId, cancellationToken));
         }
 
         [HttpPost("user/add-to-order")]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> AddOrderItemToOrder([FromBody] AddOrderItemDto orderItem, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddOrderItemToOrder([FromBody] UpsertOrderItemDto orderItem, CancellationToken cancellationToken)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 

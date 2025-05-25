@@ -1,6 +1,6 @@
 ﻿namespace DotNetExample.Dtos.Dtos
 {
-    public class AddOrderItemDto
+    public class UpsertOrderItemDto : BaseDto<int>
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }
