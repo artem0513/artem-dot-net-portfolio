@@ -5,5 +5,6 @@ namespace DotNetExample.Contracts.Services
 {
     public interface IOrderItemService : IService<int, OrderItemDto>
     {
+        Task AddItemToOrderAsync(int userId, AddOrderItemDto item, CancellationToken cancellationToken = default);
     }
 }

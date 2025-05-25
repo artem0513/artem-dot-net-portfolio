@@ -1,5 +1,6 @@
 ﻿using DotNetExample.Contracts.Services;
 using DotNetExample.Dtos.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetExample.Controllers
@@ -26,6 +27,14 @@ namespace DotNetExample.Controllers
         public async Task<IActionResult> Get([FromRoute] int orderId, CancellationToken cancellationToken)
         {
             return Ok(await _orderService.GetAsync(orderId, cancellationToken));
+        }
+
+        [HttpDelete("{orderId}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateOrder([FromRoute] int orderId, CancellationToken cancellationToken)
+        {
+            await _orderService.DeleteAsync(orderId, cancellationToken);
+            return Ok();
         }
     }
 }

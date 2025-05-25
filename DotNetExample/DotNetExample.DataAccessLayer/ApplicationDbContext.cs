@@ -13,5 +13,6 @@ namespace DotNetExample.DataAccessLayer
         public DbSet<CategoryEntity> Categories => Set<CategoryEntity>();
         public DbSet<OrderEntity> Orders => Set<OrderEntity>();
         public DbSet<OrderItemEntity> OrderItems => Set<OrderItemEntity>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     }
 }

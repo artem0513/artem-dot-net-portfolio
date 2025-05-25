@@ -1,4 +1,5 @@
 ﻿using DotNetExample.Contracts.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetExample.Controllers
@@ -27,6 +28,7 @@ namespace DotNetExample.Controllers
         }
 
         [HttpDelete("{categoryId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int categoryId, CancellationToken cancellationToken)
         {
             await _categoryService.DeleteAsync(categoryId, cancellationToken);

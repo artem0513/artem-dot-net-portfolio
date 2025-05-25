@@ -7,6 +7,7 @@ namespace DotNetExample.DataAccessLayer
     {
         public required string FullName { get; set; }
         public string? Address { get; set; }
+        public ICollection<RefreshToken>? RefreshTokens { get; set; }
 
         public ICollection<OrderEntity>? Orders { get; set; }
     }

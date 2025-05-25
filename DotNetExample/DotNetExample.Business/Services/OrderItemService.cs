@@ -9,5 +9,10 @@ namespace DotNetExample.Business.Services
         public OrderItemService(IOrderItemRepository repository) : base(repository)
         {
         }
+
+        public async Task AddItemToOrderAsync(int userId, AddOrderItemDto item, CancellationToken cancellationToken = default)
+        {
+            await Repository.AddItemToOrderAsync(userId, item, cancellationToken);
+        }
     }
 }

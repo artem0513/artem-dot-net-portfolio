@@ -5,5 +5,6 @@ namespace DotNetExample.Contracts.Repositories
 {
     public interface IOrderItemRepository : IRepository<int, OrderItemDto>
     {
+        Task AddItemToOrderAsync(int userId, AddOrderItemDto item, CancellationToken cancellationToken = default);
     }
 }
